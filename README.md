@@ -61,10 +61,6 @@ The state ensemble is updated as:
 
 ## Ensemble Information filter
 
-![Ensemble Kalman filter](images/enif_tracking.gif "Ensemble Kalman filter")
-
-# Ensemble Information Filter Example
-
 The EnIF operates in the **information space**, using the precision matrix (inverse covariance matrix) to represent uncertainty, which allows for enforcing sparsity and leveraging conditional independence.
 
 The model has two state variables:
@@ -126,3 +122,5 @@ The state ensemble is updated as:
 - **Precision Matrix**: The precision matrix is explicitly updated during both the prediction and update steps.
 - **Process Noise**: Gaussian noise with standard deviation 0.1 is added during the prediction step.
 - **Measurement Noise**: Gaussian noise with standard deviation 0.2 is added to the position measurements.
+
+![Ensemble Kalman filter](images/enif_tracking.gif "Ensemble Kalman filter")
