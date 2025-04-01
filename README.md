@@ -1,40 +1,128 @@
 # Ensemble-Information-Filter
-An implementation of he Ensemble Information Filter in Python
+An implementation of he Ensemble Information Filter in Python for learning purpose. Link to paper: https://arxiv.org/pdf/2501.09016
 
-https://notebooklm.google.com/notebook/233dcba4-b243-48fe-aa1b-0994e66663eb?_gl=1*11hg3ma*_ga*MzMyNzUwMTM5LjE3NDIzOTkwMzE.*_ga_W0LDH41ZCB*MTc0MjkwNTUxMC4yLjEuMTc0MjkwNTUxMS4wLjAuMA..
+## Example of Bayesian update process:
 
-https://arxiv.org/pdf/2501.09016
+Estimating the bias of a coin based on observed coin flips, using the Beta distribution as prio and updates 
+the posterior distribution based on counted coin flips.
+![Bayesion update of coin flip](images/bayesian_update.gif "Bayesion update of coin flip")
 
-• Strukturér prosjektet: Planlegg hvordan du vil strukturere koden din. Noen mulige komponenter kan være: </br>
-  ◦ Moduler for estimering av presisjonsmatriser basert på Markov-struktur.</br>
-  ◦ Implementering av Ensemble Information Filter-oppdateringsligninger (ligning 40 og 41).</br>
-  ◦ Funksjoner for å definere og arbeide med grafstrukturer som representerer betinget uavhengighet. </br>
-  ◦ Moduler for datahåndtering og innlasting av datasett. </br>
-  ◦ Skript for å kjøre eksperimenter og evaluere ytelsen. </br>  </br>
+## Ensemble Kalman filter
 
-• Implementer nøkkelkomponenter: Begynn med å implementere de grunnleggende delene av EnIF, for eksempel måter å representere og estimere presisjonsmatrisen $\Lambda_{t|t-1}$ basert på en gitt graf $G$. Du kan vurdere å starte med det affine KR-kartet nevnt i seksjon 4.1. </br></br>
+The model has two state variables:
+1. **Position** (`x`)
+2. **Velocity** (`v`)
 
-• Test med enkle eksempler: Start med enkle, lavdimensjonale problemer for å sikre at de grunnleggende implementeringene fungerer som forventet. Eksempel 1 (Conditioned Matérn-GRF) kan være et godt utgangspunkt, da det gir en spesifikk oppdateringsregel som er et spesialtilfelle av EnKF. </br></br>
+The EnKF tracks these variables over time using:
+- A **prediction step** to propagate the state ensemble forward in time based on a constant velocity model.
+- An **update step** to correct the state ensemble using noisy position measurements.
 
-• Versjonskontroll: Bruk Git aktivt for å spore endringer, gjøre commits med beskrivende meldinger, og eventuelt jobbe med grener for ulike funksjoner eller eksperimenter. </br></br>
+### Prediction Step
+The state transition model assumes constant velocity:
+\[
+\mathbf{x}_{t+1} = \mathbf{F} \mathbf{x}_t + \mathbf{q}
+\]
+Where:
+- \(\mathbf{x}_t = \begin{bmatrix} x \\ v \end{bmatrix}\) is the state vector.
+- \(\mathbf{F} = \begin{bmatrix} 1 & \Delta t \\ 0 & 1 \end{bmatrix}\) is the state transition matrix.
+- \(\mathbf{q}\) is the process noise, modeled as Gaussian noise.
 
-• Dokumentasjon: Legg til dokumentasjon i koden din (docstrings) og vurder å opprette en README-fil som forklarer prosjektet, hvordan det installeres og brukes, og hvordan man kan kjøre testene. </br>
-Datasett for testing:</br>
-Kildene nevner flere scenarier som du kan bruke som utgangspunkt for å generere eller finne datasett for testing:</br></br>
+### Update Step
+The measurement model assumes we only observe the position:
+\[
+\mathbf{z}_t = \mathbf{H} \mathbf{x}_t + \mathbf{r}
+\]
+Where:
+- \(\mathbf{z}_t\) is the measurement (position).
+- \(\mathbf{H} = \begin{bmatrix} 1 & 0 \end{bmatrix}\) is the measurement matrix.
+- \(\mathbf{r}\) is the measurement noise, modeled as Gaussian noise.
 
-• 1D Matérn prosess (Ornstein-Uhlenbeck): Eksperimentene i seksjon 5.1 bruker en 1D Matérn-prosess, som tilsvarer en Ornstein-Uhlenbeck (OU) prosess (ligning 50). Du kan generere syntetiske datasett fra denne prosessen ved å bruke Euler-Maruyama-skjemaet (ligning nevnt i seksjon 3.1 og 5.1). Dette gir deg kontrollerte Gaussiske data med kjente Markov-egenskaper (AR-1 prosess). Observasjoner kan simuleres ved å legge til støy til deler av tilstanden. </br></br>
+The Kalman gain is computed as:
+\[
+\mathbf{K} = \mathbf{P} \mathbf{H}^T (\mathbf{H} \mathbf{P} \mathbf{H}^T + \mathbf{R})^{-1}
+\]
+Where:
+- \(\mathbf{P}\) is the covariance matrix of the state ensemble.
+- \(\mathbf{R}\) is the measurement noise covariance.
 
-• Lorenz-96 modell: Seksjon 6.1 bruker Lorenz-96 modellen (ligning 51) som en standard benchmark for dataassimilering. Du kan generere tidsseriedata fra denne deterministiske, men kaotiske modellen ved å bruke for eksempel Runge-Kutta 4 (RK4) integrasjon. For filtering kan du deretter simulere observasjoner av deler av tilstanden med tilsatt støy. Modellen har kjente lokale dynamiske koblinger, som induserer en tilhørende betinget uavhengighetsstruktur (vist for Euler og RK4 i Figur 6). </br></br>
+The state ensemble is updated as:
+\[
+\mathbf{x}_i = \mathbf{x}_i + \mathbf{K} (\mathbf{z}_i - \mathbf{H} \mathbf{x}_i)
+\]
 
-•2D Anisotropic Exponential Gaussian Random Field (GRF): Seksjon 6.3 bruker 2D anisotrope eksponensielle GRFer for å representere statiske parametere. Selv om disse spesifikt ikke har Markov-egenskaper i to dimensjoner, kan dette være et interessant testtilfelle for å undersøke hvordan EnIF håndterer situasjoner der den antatte Markov-strukturen er en tilnærming. Du kan generere slike GRFer ved hjelp av biblioteker som støtter kovaransfunksjoner (f.eks., ved å bruke Cholesky-dekomponering av kovariansmatrisen). Observasjoner simuleres langs diagonalen med støy. </br>
+## Example Details
 
-Når du tester, bør du fokusere på å evaluere hvordan EnIF håndterer kjente utfordringer i EDA, som: </br></br>
+- **State Ensemble**: The filter uses an ensemble of 10 state vectors, initialized with random positions and velocities.
+- **Process Noise**: Gaussian noise with standard deviation 0.1 is added during the prediction step.
+- **Measurement Noise**: Gaussian noise with standard deviation 0.2 is added to the position measurements.
 
-• Spurious correlations: Undersøk om EnIF gir mer lokale og pålitelige oppdateringer sammenlignet med metoder som EnKF, spesielt når ensemble-størrelsen er begrenset.</br></br>
+![Ensemble Kalman filter](images/enkf_tracking.gif "Ensemble Kalman filter")
 
-• Ensemble collapse: Se om ensemble-spredningen opprettholdes bedre med EnIF, spesielt over tid eller etter flere dataassimileringstrinn. </br></br>
 
-•Adaptiv lokalisering: Test om EnIF automatisk tilpasser seg styrken av avhengighet i dataene uten behov for manuell justering av lokaliseringsparametere. </br></br>
+## Ensemble Information filter
 
-•Skalering med dimensjon: Vurder den beregningsmessige ytelsen til EnIF når dimensjonen på tilstanden/parameterrommet øker. </br></br>
-Ved å starte med enkle datasett og gradvis øke kompleksiteten, kan du systematisk utvikle og validere din implementering av Ensemble Information Filter. Husk å referere tilbake til detaljene i kildepapiret for de spesifikke ligningene og metodene som er foreslått. </br>
+![Ensemble Kalman filter](images/enif_tracking.gif "Ensemble Kalman filter")
+
+# Ensemble Information Filter Example
+
+The EnIF operates in the **information space**, using the precision matrix (inverse covariance matrix) to represent uncertainty, which allows for enforcing sparsity and leveraging conditional independence.
+
+The model has two state variables:
+1. **Position** (`x`)
+2. **Velocity** (`v`)
+
+The EnIF tracks these variables over time using:
+- A **prediction step** to propagate the state ensemble forward in time based on a constant velocity model.
+- An **update step** to correct the state ensemble using noisy position measurements, while explicitly updating the precision matrix.
+
+### Prediction Step
+The state transition model assumes constant velocity:
+\[
+\mathbf{x}_{t+1} = \mathbf{F} \mathbf{x}_t + \mathbf{q}
+\]
+Where:
+- \(\mathbf{x}_t = \begin{bmatrix} x \\ v \end{bmatrix}\) is the state vector.
+- \(\mathbf{F} = \begin{bmatrix} 1 & \Delta t \\ 0 & 1 \end{bmatrix}\) is the state transition matrix.
+- \(\mathbf{q}\) is the process noise, modeled as Gaussian noise.
+
+The precision matrix is propagated as:
+\[
+\mathbf{\Lambda}_{t+1} = (\mathbf{F} \mathbf{\Lambda}_t^{-1} \mathbf{F}^T + \mathbf{Q})^{-1}
+\]
+Where:
+- \(\mathbf{\Lambda}_t = \mathbf{P}_t^{-1}\) is the precision matrix (inverse covariance).
+- \(\mathbf{Q}\) is the process noise covariance.
+
+### Update Step
+The measurement model assumes we only observe the position:
+\[
+\mathbf{z}_t = \mathbf{H} \mathbf{x}_t + \mathbf{r}
+\]
+Where:
+- \(\mathbf{z}_t\) is the measurement (position).
+- \(\mathbf{H} = \begin{bmatrix} 1 & 0 \end{bmatrix}\) is the measurement matrix.
+- \(\mathbf{r}\) is the measurement noise, modeled as Gaussian noise.
+
+The precision matrix is updated explicitly:
+\[
+\mathbf{\Lambda}_{t+1} = \mathbf{\Lambda}_t + \mathbf{H}^T \mathbf{R}^{-1} \mathbf{H}
+\]
+Where:
+- \(\mathbf{R}\) is the measurement noise covariance.
+
+The Kalman gain in the information space is:
+\[
+\mathbf{K} = \mathbf{\Lambda}_t^{-1} \mathbf{H}^T (\mathbf{H} \mathbf{\Lambda}_t^{-1} \mathbf{H}^T + \mathbf{R})^{-1}
+\]
+
+The state ensemble is updated as:
+\[
+\mathbf{x}_i = \mathbf{x}_i + \mathbf{K} (\mathbf{z}_i - \mathbf{H} \mathbf{x}_i)
+\]
+
+### Example Details
+
+- **State Ensemble**: The filter uses an ensemble of 10 state vectors, initialized with random positions and velocities.
+- **Precision Matrix**: The precision matrix is explicitly updated during both the prediction and update steps.
+- **Process Noise**: Gaussian noise with standard deviation 0.1 is added during the prediction step.
+- **Measurement Noise**: Gaussian noise with standard deviation 0.2 is added to the position measurements.

@@ -124,4 +124,4 @@ plt.title('Ensemble Kalman Filter Tracking')
 plt.show()
 
 # Optionally save the animation
-# anim.save('enkf_tracking.gif', writer='pillow')
+anim.save('enkf_tracking.gif', writer='pillow')

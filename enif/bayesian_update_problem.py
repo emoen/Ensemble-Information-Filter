@@ -65,4 +65,4 @@ anim = FuncAnimation(fig, update, frames=n_flips,
 plt.show()
 
 # Optionally save the animation (uncomment to save)
-# anim.save('bayesian_update.gif', writer='pillow')
+anim.save('bayesian_update.gif', writer='pillow')

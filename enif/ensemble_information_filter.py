@@ -119,4 +119,4 @@ plt.title('Ensemble Information Filter Tracking')
 plt.show()
 
 # Optionally save the animation
-# anim.save('enif_tracking.gif', writer='pillow')
+anim.save('enif_tracking.gif', writer='pillow')
