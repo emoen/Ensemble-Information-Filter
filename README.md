@@ -32,31 +32,36 @@ $$
 ```
 Where:
 - $`\mathbf{x}_t = \begin{bmatrix} x \\ v \end{bmatrix}`$ is the state vector.
-- $\mathbf{F} = \begin{bmatrix} 1 & \Delta t \\ 0 & 1 \end{bmatrix}$ is the state transition matrix.
-- $\mathbf{q}$ is the process noise, modeled as Gaussian noise.
+- $`\mathbf{F} = \begin{bmatrix} 1 & \Delta t \\ 0 & 1 \end{bmatrix}`$ is the state transition matrix.
+- $`\mathbf{q}`$ is the process noise, modeled as Gaussian noise.
 
 ### Update Step
 The measurement model assumes we only observe the position:
-\[
+```math
+$$
 \mathbf{z}_t = \mathbf{H} \mathbf{x}_t + \mathbf{r}
-\]
+```
 Where:
-- \(\mathbf{z}_t\) is the measurement (position).
-- \(\mathbf{H} = \begin{bmatrix} 1 & 0 \end{bmatrix}\) is the measurement matrix.
-- \(\mathbf{r}\) is the measurement noise, modeled as Gaussian noise.
+- $`\mathbf{z}_t\)`$ is the measurement (position).
+- $`\mathbf{H} = \begin{bmatrix} 1 & 0 \end{bmatrix}\)`$ is the measurement matrix.
+- $`\mathbf{r}\)`$ is the measurement noise, modeled as Gaussian noise.
 
 The Kalman gain is computed as:
-\[
+```math
+$$
 \mathbf{K} = \mathbf{P} \mathbf{H}^T (\mathbf{H} \mathbf{P} \mathbf{H}^T + \mathbf{R})^{-1}
-\]
+$$
+```
 Where:
-- \(\mathbf{P}\) is the covariance matrix of the state ensemble.
-- \(\mathbf{R}\) is the measurement noise covariance.
+- $`\mathbf{P}\)`$ is the covariance matrix of the state ensemble.
+- $`\mathbf{R}\)`$ is the measurement noise covariance.
 
 The state ensemble is updated as:
-\[
+```math
+$$
 \mathbf{x}_i = \mathbf{x}_i + \mathbf{K} (\mathbf{z}_i - \mathbf{H} \mathbf{x}_i)
-\]
+$$
+```
 
 ## Example Details
 
@@ -81,48 +86,60 @@ The EnIF tracks these variables over time using:
 
 ### Prediction Step
 The state transition model assumes constant velocity:
-\[
+```math
+$$
 \mathbf{x}_{t+1} = \mathbf{F} \mathbf{x}_t + \mathbf{q}
-\]
+$$
+```
 Where:
-- \(\mathbf{x}_t = \begin{bmatrix} x \\ v \end{bmatrix}\) is the state vector.
-- \(\mathbf{F} = \begin{bmatrix} 1 & \Delta t \\ 0 & 1 \end{bmatrix}\) is the state transition matrix.
-- \(\mathbf{q}\) is the process noise, modeled as Gaussian noise.
+- $`\mathbf{x}_t = \begin{bmatrix} x \\ v \end{bmatrix}`$ is the state vector.
+- $`\mathbf{F} = \begin{bmatrix} 1 & \Delta t \\ 0 & 1 \end{bmatrix}`$ is the state transition matrix.
+- $`\mathbf{q}`$ is the process noise, modeled as Gaussian noise.
 
 The precision matrix is propagated as:
-\[
+```math
+$$
 \mathbf{\Lambda}_{t+1} = (\mathbf{F} \mathbf{\Lambda}_t^{-1} \mathbf{F}^T + \mathbf{Q})^{-1}
-\]
+$$
+```
 Where:
-- \(\mathbf{\Lambda}_t = \mathbf{P}_t^{-1}\) is the precision matrix (inverse covariance).
-- \(\mathbf{Q}\) is the process noise covariance.
+- $`\mathbf{\Lambda}_t = \mathbf{P}_t^{-1}`$ is the precision matrix (inverse covariance).
+- $`\mathbf{Q}`$ is the process noise covariance.
 
 ### Update Step
 The measurement model assumes we only observe the position:
-\[
+```math
+$$
 \mathbf{z}_t = \mathbf{H} \mathbf{x}_t + \mathbf{r}
-\]
+$$
+```
 Where:
-- \(\mathbf{z}_t\) is the measurement (position).
-- \(\mathbf{H} = \begin{bmatrix} 1 & 0 \end{bmatrix}\) is the measurement matrix.
-- \(\mathbf{r}\) is the measurement noise, modeled as Gaussian noise.
+- $`\mathbf{z}_t`$ is the measurement (position).
+- $`\mathbf{H} = \begin{bmatrix} 1 & 0 \end{bmatrix}`$ is the measurement matrix.
+- $`\mathbf{r}`$ is the measurement noise, modeled as Gaussian noise.
 
 The precision matrix is updated explicitly:
-\[
+```math
+$$
 \mathbf{\Lambda}_{t+1} = \mathbf{\Lambda}_t + \mathbf{H}^T \mathbf{R}^{-1} \mathbf{H}
-\]
+$$
+```
 Where:
-- \(\mathbf{R}\) is the measurement noise covariance.
+- $`\mathbf{R}`$ is the measurement noise covariance.
 
 The Kalman gain in the information space is:
-\[
+```math
+$$
 \mathbf{K} = \mathbf{\Lambda}_t^{-1} \mathbf{H}^T (\mathbf{H} \mathbf{\Lambda}_t^{-1} \mathbf{H}^T + \mathbf{R})^{-1}
-\]
+$$
+```
 
 The state ensemble is updated as:
-\[
+```math
+$$
 \mathbf{x}_i = \mathbf{x}_i + \mathbf{K} (\mathbf{z}_i - \mathbf{H} \mathbf{x}_i)
-\]
+$$
+```
 
 ### Example Details
 
