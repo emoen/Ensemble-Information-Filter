@@ -25,13 +25,13 @@ The EnKF tracks these variables over time using:
 
 ### Prediction Step
 The state transition model assumes constant velocity:
-\[
+$$
 \mathbf{x}_{t+1} = \mathbf{F} \mathbf{x}_t + \mathbf{q}
-\]
+$$
 Where:
-- \(\mathbf{x}_t = \begin{bmatrix} x \\ v \end{bmatrix}\) is the state vector.
-- \(\mathbf{F} = \begin{bmatrix} 1 & \Delta t \\ 0 & 1 \end{bmatrix}\) is the state transition matrix.
-- \(\mathbf{q}\) is the process noise, modeled as Gaussian noise.
+- $\mathbf{x}_t = \begin{bmatrix} x \\ v \end{bmatrix}$ is the state vector.
+- $\mathbf{F} = \begin{bmatrix} 1 & \Delta t \\ 0 & 1 \end{bmatrix}$ is the state transition matrix.
+- $\mathbf{q}$ is the process noise, modeled as Gaussian noise.
 
 ### Update Step
 The measurement model assumes we only observe the position:
