@@ -42,9 +42,9 @@ $$
 \mathbf{z}_t = \mathbf{H} \mathbf{x}_t + \mathbf{r}
 ```
 Where:
-- $`\mathbf{z}_t\)`$ is the measurement (position).
-- $`\mathbf{H} = \begin{bmatrix} 1 & 0 \end{bmatrix}\)`$ is the measurement matrix.
-- $`\mathbf{r}\)`$ is the measurement noise, modeled as Gaussian noise.
+- $`\mathbf{z}_t`$ is the measurement (position).
+- $`\mathbf{H} = \begin{bmatrix} 1 & 0 \end{bmatrix}`$ is the measurement matrix.
+- $`\mathbf{r}`$ is the measurement noise, modeled as Gaussian noise.
 
 The Kalman gain is computed as:
 ```math
@@ -53,8 +53,8 @@ $$
 $$
 ```
 Where:
-- $`\mathbf{P}\)`$ is the covariance matrix of the state ensemble.
-- $`\mathbf{R}\)`$ is the measurement noise covariance.
+- $`\mathbf{P}`$ is the covariance matrix of the state ensemble.
+- $`\mathbf{R}`$ is the measurement noise covariance.
 
 The state ensemble is updated as:
 ```math
