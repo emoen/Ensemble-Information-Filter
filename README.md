@@ -40,6 +40,7 @@ The measurement model assumes we only observe the position:
 ```math
 $$
 \mathbf{z}_t = \mathbf{H} \mathbf{x}_t + \mathbf{r}
+$$
 ```
 Where:
 - $`\mathbf{z}_t`$ is the measurement (position).
