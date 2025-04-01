@@ -1,3 +1,6 @@
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+
 # Ensemble-Information-Filter
 An implementation of he Ensemble Information Filter in Python for learning purpose. Link to paper: https://arxiv.org/pdf/2501.09016
 
