@@ -31,7 +31,7 @@ $$
 $$
 ```
 Where:
-- $\mathbf{x}_t = \begin{bmatrix} x \\ v \end{bmatrix}$ is the state vector.
+- $`\mathbf{x}_t = \begin{bmatrix} x \\ v \end{bmatrix}`$ is the state vector.
 - $\mathbf{F} = \begin{bmatrix} 1 & \Delta t \\ 0 & 1 \end{bmatrix}$ is the state transition matrix.
 - $\mathbf{q}$ is the process noise, modeled as Gaussian noise.
 
