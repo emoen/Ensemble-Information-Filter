@@ -50,11 +50,14 @@ $$
 $$
 ```
 Where:
-- $`Q`$ is the covariance matrix of the state ensemble (process noise), which quantifies the uncertainty in the state estimate. It represents how much uncertainty there is in the filter's estimate of the state variables (e.g., position and velocity). It quantifies the uncertainty in the filter's state estimates.
+- $`H`$ is the observational model. Its the measurement matrix that maps the state space to the observation space. It defines how the state variables are observed (e.g., position is observed, but velocity is not).
+- $`Q`$ is the process noise covariance matrix. It quantifies the uncertainty in the filter's estimate of the state variables (e.g., position and velocity).
+  - A larger Q indicates that the model's predictions are less reliable due to higher uncertainty in the system's dynamics (e.g., unmodeled forces or random disturbances). The Kalman filter will rely more on the measurements to correct the state estimate, even if the measurements are noisy.
   - update of Q in the prediction step: $`\mathbf{Q}_{t+1} = \mathbf{F} \mathbf{Q}_t \mathbf{F}^T + \mathbf{Q}`$
   - update of Q in the update step: $`\mathbf{Q}_{t+1} = (\mathbf{I} - \mathbf{K} \mathbf{H}) \mathbf{Q}_t`$
-  - $`\mathbf{K} = \mathbf{Q} \mathbf{H}^T (\mathbf{H} \mathbf{Q} \mathbf{H}^T + \mathbf{R})^{-1}`$
-- $`R`$ is the measurement(observation) noise covariance. It reflects the uncertainty in the sensor measurements or inaccuracy present in the observations. A larger $`R`$ means the measurements are less reliable, so the filter relies more on the model's prediction.  
+- $`R`$ is the measurement (observation) noise covariance. It reflects the uncertainty in the sensor measurements or inaccuracy present in the observations. A larger $`R`$ means the measurements are less reliable, so the filter relies more on the model's prediction.
+  - update of Q: $`\mathbf{P}_{t+1} = \mathbf{F} \mathbf{P}_t \mathbf{F}^T + \mathbf{Q}`$ (A large Q inflates the predicted state covariance matrix).
+- $`K`$ Kalmar gain - a higher K means the filter gicves more weight to the measurement during update. 
 
 The state ensemble is updated as:
 ```math
