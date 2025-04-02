@@ -3,6 +3,11 @@
 # Ensemble-Information-Filter
 An implementation of the Ensemble Information Filter in Python for learning purpose. Link to paper: https://arxiv.org/pdf/2501.09016
 
+#  Ensemble Kalman Filter vs  Ensemble Information Filter
+
+We can see that the Ensemble Information Filter converges faster than Ensemble Kalman Filter.
+![Ensemble Kalman filter vs Ensemble Information filter](images/enkf_vs_enif_tracking.gif "Ensemble Kalman filter vs Ensemble Information filter")
+
 ## Example of Bayesian update process:
 
 Estimating the bias of a coin based on observed coin flips, using the Beta distribution as prio and updates 
