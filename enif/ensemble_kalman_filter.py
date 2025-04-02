@@ -65,7 +65,7 @@ class EnsembleKalmanFilter:
 
 # Simulation parameters
 n_steps = 100
-true_state = np.array([0.0, 1.0])  # Initial true state [position, velocity]
+true_state = np.array([-15.0, 2.0])  # Initial true state [position, velocity]
 measurements = []
 true_states = []
 estimated_states = []
@@ -95,7 +95,7 @@ def animate(frame):
     # Simulate true state
     F = np.array([[1, enkf.dt],
                   [0, 1]])
-    true_state = F @ true_states[-1] if true_states else np.array([0.0, 1.0])
+    true_state = F @ true_states[-1] if true_states else np.array([-5.0, 2.0])
     true_states.append(true_state)
 
     # Generate noisy measurement (only position)

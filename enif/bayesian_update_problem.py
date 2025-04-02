@@ -10,7 +10,7 @@ np.random.seed(42)
 true_p = 0.7
 
 # Generate 100 coin flips
-n_flips = 100
+n_flips = 120
 flips = np.random.binomial(1, true_p, n_flips)
 
 # Initial parameters for Beta distribution
