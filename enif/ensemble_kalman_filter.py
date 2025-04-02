@@ -121,7 +121,7 @@ def animate(frame):
 anim = FuncAnimation(fig, animate, frames=n_steps,
                      interval=50, blit=True)
 plt.title('Ensemble Kalman Filter Tracking')
-plt.show()
+#plt.show()
 
 # Optionally save the animation
 anim.save('enkf_tracking.gif', writer='pillow')
