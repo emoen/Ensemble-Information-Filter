@@ -29,7 +29,7 @@ $$
 Where:
 - $`\mathbf{x}_t = \begin{bmatrix} x \\ v \end{bmatrix}`$ is the state vector.
 - $`\mathbf{F} = \begin{bmatrix} 1 & \Delta t \\ 0 & 1 \end{bmatrix}`$ is the state transition matrix.
-- $`\mathbf{q}`$ is the process noise, modeled as Gaussian noise.
+- $`\mathbf{q}`$ is the process noise, modeled as Gaussian noise. It models uncertainties in the system's dynamics. The fact that the state transition (e.g., motion of an object) is not perfectly predictable due unmodeled dynamics.
 
 ### Update Step
 The measurement model assumes we only observe the position:
@@ -41,7 +41,7 @@ $$
 Where:
 - $`\mathbf{z}_t`$ is the measurement (position).
 - $`\mathbf{H} = \begin{bmatrix} 1 & 0 \end{bmatrix}`$ is the measurement matrix.
-- $`\mathbf{r}`$ is the measurement noise, modeled as Gaussian noise.
+- $`\mathbf{r}`$ is the measurement noise, modeled as Gaussian noise. It models inaccuracies in the observations. It models the fact that sensors or measurement devices are not perfect and introduce errors.
 
 The Kalman gain is computed as:
 ```math
