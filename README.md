@@ -66,7 +66,7 @@ $$
 
 ## Example Details
 
-- **State Ensemble**: The filter uses an ensemble of 10 state vectors, initialized with random positions and velocities.
+- **State Ensemble**: The filter uses an ensemble of 10 state vectors, initialized with random positions and velocities of -5.0 and 2.0
 - **Process Noise**: Gaussian noise with standard deviation 0.1 is added during the prediction step.
 - **Measurement Noise**: Gaussian noise with standard deviation 0.2 is added to the position measurements.
 
