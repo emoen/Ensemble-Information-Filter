@@ -150,3 +150,8 @@ $$
 - **Measurement Noise**: Gaussian noise with standard deviation 0.2 is added to the position measurements.
 
 ![Ensemble Kalman filter](images/enif_tracking.gif "Ensemble Kalman filter")
+
+# EnKf vs EnIf
+
+We can see that the ensemble information filter converges faster than ensemble Kalman filter.
+![Ensemble Kalman filter vs Ensemble Information filter](images/enkf_vs_enif_tracking.gif "Ensemble Kalman filter vs Ensemble Information filter")
