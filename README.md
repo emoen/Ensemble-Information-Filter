@@ -46,12 +46,15 @@ Where:
 The Kalman gain is computed as:
 ```math
 $$
-\mathbf{K} = \mathbf{P} \mathbf{H}^T (\mathbf{H} \mathbf{P} \mathbf{H}^T + \mathbf{R})^{-1}
+\mathbf{K} = \mathbf{Q} \mathbf{H}^T (\mathbf{H} \mathbf{Q} \mathbf{H}^T + \mathbf{R})^{-1}
 $$
 ```
 Where:
-- $`\mathbf{P}`$ is the covariance matrix of the state ensemble.
-- $`\mathbf{R}`$ is the measurement noise covariance.
+- $`Q`$ is the covariance matrix of the state ensemble (process noise), which quantifies the uncertainty in the state estimate. It represents how much uncertainty there is in the filter's estimate of the state variables (e.g., position and velocity). It quantifies the uncertainty in the filter's state estimates.
+  - update of Q in the prediction step: $`\mathbf{Q}_{t+1} = \mathbf{F} \mathbf{Q}_t \mathbf{F}^T + \mathbf{Q}`$
+  - update of Q in the update step: $`\mathbf{Q}_{t+1} = (\mathbf{I} - \mathbf{K} \mathbf{H}) \mathbf{Q}_t`$
+  - $`\mathbf{K} = \mathbf{Q} \mathbf{H}^T (\mathbf{H} \mathbf{Q} \mathbf{H}^T + \mathbf{R})^{-1}`$
+- $`R`$ is the measurement(observation) noise covariance. It reflects the uncertainty in the sensor measurements or inaccuracy present in the observations. A larger $`R`$ means the measurements are less reliable, so the filter relies more on the model's prediction.  
 
 The state ensemble is updated as:
 ```math
