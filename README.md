@@ -1,7 +1,7 @@
 
 
 # Ensemble-Information-Filter
-An implementation of he Ensemble Information Filter in Python for learning purpose. Link to paper: https://arxiv.org/pdf/2501.09016
+An implementation of the Ensemble Information Filter in Python for learning purpose. Link to paper: https://arxiv.org/pdf/2501.09016
 
 ## Example of Bayesian update process:
 
