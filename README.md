@@ -153,6 +153,12 @@ $$
 - **Precision Matrix**: The precision matrix is explicitly updated during both the prediction and update steps.
 - **Process Noise**: Gaussian noise with standard deviation 0.1 is added during the prediction step.
 - **Measurement Noise**: Gaussian noise with standard deviation 0.2 is added to the position measurements.
+- 
+### Further references
+
+Work in paper reference triangular transport (tutorial: https://arxiv.org/pdf/2503.21673) with application to causal discovery (Akbari, S., Ganassali, L., and Kiyavash, N. (2023). Learning Causal Graphs via Monotone Triangular Transport Maps., Xi, Q., Gonzalez, S., and Bloem-Reddy, B. (2023). Triangular monotonic generative models can perform causal
+discovery. In Causal Representation Learning Workshop at NeurIPS 2023) 
+
 
 ![Ensemble Kalman filter](images/enif_tracking.gif "Ensemble Kalman filter")
 
