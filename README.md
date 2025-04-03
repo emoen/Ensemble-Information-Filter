@@ -133,7 +133,7 @@ $$
 Where:
 - $`\mathbf{R}`$ is the measurement noise covariance.
 
-The Kalman gain in the information space is:
+The Information gain in the information space is:
 ```math
 $$
 \mathbf{K} = \mathbf{\Lambda}_t^{-1} \mathbf{H}^T (\mathbf{H} \mathbf{\Lambda}_t^{-1} \mathbf{H}^T + \mathbf{R})^{-1}
